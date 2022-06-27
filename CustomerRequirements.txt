@@ -1,0 +1,16 @@
+Implement an application which is:
+- A user can regiter an account basic by email/password.
+- With user account, user must login to use the system
+- User can see a list of their created projects.
+- User can create a new project or update/delete a selected project
+- A project has a name and description
+- User can see a list of their created to-do tasks in a project.
+- User can create a new task for a project or update/delete a selected task.
+- A task has a name and description.
+- User can invite any others users in the system to join the project. When they accept the inviation, they could assign themself to any not assigned tasks in the project.
+- The project owner, who create the project, can assign any other project members to a task.
+- Only project owner can update a assigned task to other assigned user.
+- The project owner can assign themself to any tasks
+- A task has 3 status: New, Inprogress and Finished.
+- Only the task assignee can update task status.
+- The task cannot be assigned to others members when it's Finished.
