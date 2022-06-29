@@ -43,14 +43,15 @@ builder.Services
     })
     .AddJwtBearer(options =>
     {
-        options.SaveToken = true;
-        options.RequireHttpsMetadata = !environment.EnvironmentName.Contains("Development");
         options.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = true,
+            ValidIssuer = configuration["JWT:ValidIssuer"],
+            
             ValidateAudience = true,
             ValidAudience = configuration["JWT:ValidAudience"],
-            ValidIssuer = configuration["JWT:ValidIssuer"],
+
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
         };
     });
@@ -66,7 +67,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
