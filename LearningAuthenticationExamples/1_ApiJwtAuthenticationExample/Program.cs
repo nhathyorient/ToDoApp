@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
-var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "";
+var environment = builder.Environment!;
 
 // Add services to the container.
 
@@ -44,7 +44,7 @@ builder.Services
     .AddJwtBearer(options =>
     {
         options.SaveToken = true;
-        options.RequireHttpsMetadata = !environment.Contains("Development");
+        options.RequireHttpsMetadata = !environment.EnvironmentName.Contains("Development");
         options.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = true,
