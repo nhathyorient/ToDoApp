@@ -8,8 +8,8 @@ namespace WebApp_UnderTheHood.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        [BindProperty]
-        public Credential Credential { get; set; }
+        [BindProperty] 
+        public Credential Credential { get; set; } = new Credential();
 
         public void OnGet()
         {
@@ -21,7 +21,7 @@ namespace WebApp_UnderTheHood.Pages.Account
             // verify the credentials
             if (ModelState.IsValid && Credential.UserName == "admin" && Credential.Password == "password")
             {
-                var claimsPrincipal = CreateAuthenticationUserContext();
+                var claimsPrincipal = CreateAuthenticationUserContext(userName: Credential.UserName!);
 
                 // Generating Security Context, in this case is cookie
                 // WHY: The scheme name will be used to find the correct authentication handler linked to it
@@ -38,12 +38,12 @@ namespace WebApp_UnderTheHood.Pages.Account
             return Page();
         }
 
-        private ClaimsPrincipal CreateAuthenticationUserContext()
+        private ClaimsPrincipal CreateAuthenticationUserContext(string userName)
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, Credential.UserName),
-                new Claim(ClaimTypes.Email, $"{Credential.UserName}@mywebsite.com"),
+                new Claim(ClaimTypes.Name, userName),
+                new Claim(ClaimTypes.Email, $"{userName}@mywebsite.com"),
                 new Claim(AppAuthenticationClaims.HrDepartment.Type, AppAuthenticationClaims.HrDepartment.Value),
                 new Claim(AppAuthenticationClaims.Admin.Type, AppAuthenticationClaims.Admin.Value),
                 new Claim(AppAuthenticationClaims.Manager.Type, AppAuthenticationClaims.Manager.Value),
