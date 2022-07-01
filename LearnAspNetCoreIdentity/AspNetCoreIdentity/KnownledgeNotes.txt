@@ -9,3 +9,9 @@ In AspnetCoreIdentity theres some main services:
 		- For Authorization, we still need to create our own custom policy and IAuthorizationHandler if needed. 
 		By default It's handled by default generic AuthorizationHandler for basic by Role
 	- UserManager: help us to get all user information in the database
+
+HOW 2FA Through Email WORKS:
+
+	- 1 User send first factor authentication is username/password to server. Server audit success then create a code
+	- 2 The code will be saved into identity cookie authentication and send back to the browser. Also send the code to the email
+	- 3 User will check the code in email and send it to the server. Server will compare it with the saved code in identity cookie auth

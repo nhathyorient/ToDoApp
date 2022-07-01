@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp_UnderTheHood", "Lear
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "LearnAspNetCoreIdentity\WebApi\WebApi.csproj", "{17A1EE72-FF83-4542-B0F0-057025A5DFCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreIdentity", "LearnAspNetCoreIdentity\AspNetCoreIdentity\AspNetCoreIdentity.csproj", "{19DA36A5-1698-4B4D-B2B6-472DB4E7601A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreIdentity", "LearnAspNetCoreIdentity\AspNetCoreIdentity\AspNetCoreIdentity.csproj", "{19DA36A5-1698-4B4D-B2B6-472DB4E7601A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

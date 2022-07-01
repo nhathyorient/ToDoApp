@@ -19,7 +19,7 @@ public class MailKitEmailService : InfrastructureService, IEmailService
         this.smtpSetting = smtpSetting;
     }
 
-    public async Task SendEmailBySmtp(MailMessage emailMessage)
+    public async Task SendAsync(MailMessage emailMessage)
     {
         var mimeMessage = new MimeMessage();
         mimeMessage.From.Add(new MailboxAddress(name: emailMessage.From!.DisplayName, address: emailMessage.From.Address));

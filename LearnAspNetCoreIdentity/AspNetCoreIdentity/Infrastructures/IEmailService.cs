@@ -5,6 +5,6 @@ namespace AspNetCoreIdentity.Infrastructures
 {
     public interface IEmailService : IInfrastructureService
     {
-        Task SendEmailBySmtp(MailMessage emailMessage);
+        Task SendAsync(MailMessage emailMessage);
     }
 }

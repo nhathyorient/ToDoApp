@@ -15,7 +15,7 @@ public class SystemSmtpEmailService : InfrastructureService, IEmailService
         this.smtpSetting = smtpSetting;
     }
 
-    public async Task SendEmailBySmtp(MailMessage emailMessage)
+    public async Task SendAsync(MailMessage emailMessage)
     {
         using (var smtpClient = new SmtpClient(
                    smtpSetting.Value.Host,

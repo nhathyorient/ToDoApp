@@ -4,22 +4,24 @@ using System.Net.Mail;
 using System.Security.Claims;
 using AspNetCoreIdentity.Entities;
 using AspNetCoreIdentity.Infrastructures;
+using AspNetCoreIdentity.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 
 namespace AspNetCoreIdentity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
         private readonly UserManager<User> userManager;
-        private readonly IConfiguration configuration;
+        private readonly IOptions<SmtpSetting> smtpSetting;
         private readonly IEmailService emailService;
 
-        public RegisterModel(UserManager<User> userManager, IConfiguration configuration, IEmailService emailService)
+        public RegisterModel(UserManager<User> userManager, IOptions<SmtpSetting> smtpSetting, IEmailService emailService)
         {
             this.userManager = userManager;
-            this.configuration = configuration;
+            this.smtpSetting = smtpSetting;
             this.emailService = emailService;
         }
 
@@ -43,7 +45,8 @@ namespace AspNetCoreIdentity.Pages.Account
                     Email = RegisterViewModel.Email,
                     UserName = RegisterViewModel.Email,
                     Department = RegisterViewModel.Department!,
-                    Position = RegisterViewModel.Position!
+                    Position = RegisterViewModel.Position!,
+                    TwoFactorEnabled = RegisterViewModel.RequireTwoFactorAuth
                 };
 
                 var createUserResult = await userManager.CreateAsync(user, RegisterViewModel.Password);
@@ -68,14 +71,14 @@ namespace AspNetCoreIdentity.Pages.Account
                         values: new { userId = user.Id, token = confirmationToken })!;
 
                     var confirmEmailMessage = new MailMessage(
-                        from: configuration["SMTP:User"], // The sender
+                        from: smtpSetting.Value.User, // The sender
                         to: user.Email!,
                         subject: "Please confirm your email",
                         body: $"Please click on this link to confirm your email address: {confirmationLink}");
 
                     try
                     {
-                        await emailService.SendEmailBySmtp(confirmEmailMessage);
+                        await emailService.SendAsync(confirmEmailMessage);
                     }
                     catch (Exception ex)
                     {
@@ -121,5 +124,9 @@ namespace AspNetCoreIdentity.Pages.Account
         [Required]
         [Display(Name = "Position")]
         public string? Position { get; set; }
+
+        [Required]
+        [Display(Name = "Require Two Factor")]
+        public bool RequireTwoFactorAuth { get; set; }
     }
 }

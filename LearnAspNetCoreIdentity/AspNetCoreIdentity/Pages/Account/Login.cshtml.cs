@@ -36,6 +36,16 @@ namespace AspNetCoreIdentity.Pages.Account
 
                 if (signInResult.Succeeded)
                     return Redirect(returnUrl ?? "~/");
+                else if (signInResult.RequiresTwoFactor)
+                {
+                    return RedirectToPage(
+                        "/Account/LoginTwoFactor", 
+                        new
+                        {
+                            Email = Credential.Email,
+                            RememberMe = Credential.RememberMe
+                        });
+                }
                 else if (signInResult.IsLockedOut)
                     ModelState.AddModelError("Login", "You are locked out.");
                 else
