@@ -38,13 +38,25 @@ namespace AspNetCoreIdentity.Pages.Account
                     return Redirect(returnUrl ?? "~/");
                 else if (signInResult.RequiresTwoFactor)
                 {
-                    return RedirectToPage(
-                        "/Account/LoginTwoFactor", 
-                        new
-                        {
-                            Email = Credential.Email,
-                            RememberMe = Credential.RememberMe
-                        });
+                    if (Credential.LoginTwoFactorWithAuthenticator)
+                    {
+                        return RedirectToPage(
+                            "/Account/LoginTwoFactorWithAuthenticator",
+                            new
+                            {
+                                RememberMe = Credential.RememberMe
+                            });
+                    }
+                    else
+                    {
+                        return RedirectToPage(
+                            "/Account/LoginTwoFactor",
+                            new
+                            {
+                                Email = Credential.Email,
+                                RememberMe = Credential.RememberMe
+                            });
+                    }
                 }
                 else if (signInResult.IsLockedOut)
                     ModelState.AddModelError("Login", "You are locked out.");
@@ -69,5 +81,8 @@ namespace AspNetCoreIdentity.Pages.Account
 
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
+
+        [Display(Name = "LoginTwoFactorWithAuthenticator")]
+        public bool LoginTwoFactorWithAuthenticator { get; set; }
     }
 }

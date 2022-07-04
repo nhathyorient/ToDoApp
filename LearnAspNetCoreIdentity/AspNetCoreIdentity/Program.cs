@@ -33,7 +33,7 @@ services.AddIdentity<User, IdentityRole>(options =>
     })
     // Tell the identity system to use the ApplicationDbContext to store data
     .AddEntityFrameworkStores<ApplicationDbContext>()
-    // Add the email confirmation token provider to help GenerateEmailConfirmationTokenAsync
+    // Add the email confirmation token provider to help GenerateEmailConfirmationTokenAsync or 2FA authentication token (userManager.GetAuthenticatorKeyAsync)
     .AddDefaultTokenProviders();
 
 // Help config cookie authentication without adding Cookie authentication handler via .AddCookie

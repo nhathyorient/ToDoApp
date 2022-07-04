@@ -1,24 +1,9 @@
 ﻿@page
-@model AspNetCoreIdentity.Pages.Account.LoginTwoFactorModel
+@model AspNetCoreIdentity.Pages.Account.LoginTwoFactorWithAuthenticatorModel
 @{
 }
-
-<h3>Two Factor Authentication</h3>
-@if (!string.IsNullOrEmpty(@Model.Vm.FallbackSendEmailDisplaySecurityCode))
-{
-    <div class="alert alert-success" role="alert">
-        Can't not send to your email.So Your security code is: @Model.Vm.FallbackSendEmailDisplaySecurityCode
-    </div>
-}
-else
-{
-    <div class="alert alert-success" role="alert">
-        Your security code has been sent to your email.
-    </div>
-}
-
 <p>
-    <h3>Please enter the Code</h3>
+    <h3>Please enter the Code from authenticator app</h3>
 </p>
 
 <div class="container border" style="padding: 20px">

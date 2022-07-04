@@ -1,0 +1,49 @@
+﻿@page
+@model AspNetCoreIdentity.Pages.Account.AuthenticatorWithMFASetupModel
+@{
+}
+
+<h3>Step 1: Scan the QR code or enter the key to you authenticator app</h3>
+<p>
+    @Model.Vm.Key
+</p>
+<p>
+    <img src="@string.Format("data:image/png;base64,{0}", @Convert.ToBase64String(Model.Vm.QRCodeBytes))" width="300" height="300" />
+</p>
+@if (@Model.Vm.IsPrevAuthenticatorKeyHasBeenReset)
+{
+    <div class="alert alert-info">Previous authenticator key has been reset</div>
+}
+<br />
+
+<h3>Step 2: Verification Process</h3>
+<p>
+    <h3>Please enter the Code</h3>
+</p>
+<div class="container border" style="padding: 20px">
+    @if (Model.Vm.VerifySucceeded)
+    {
+        <div class="alert alert-success">Authenticator is successfully setup</div>
+    }
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Vm.VerifyForm.SecurityCode"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="Vm.VerifyForm.SecurityCode" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="Vm.VerifyForm.SecurityCode"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Verify" />
+            </div>
+            <div class="col">
+                <input type="hidden" asp-for="Vm.Key" />
+                @*<input type="hidden" asp-for="Vm.QRCodeBytes" />*@
+            </div>
+        </div>
+    </form>
+</div>

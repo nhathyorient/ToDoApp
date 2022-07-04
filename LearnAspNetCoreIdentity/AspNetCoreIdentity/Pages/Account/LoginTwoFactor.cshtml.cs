@@ -47,9 +47,9 @@ namespace AspNetCoreIdentity.Pages.Account
             {
                 var result = await signinManager.TwoFactorSignInAsync(
                     TokenOptions.DefaultEmailProvider,
-                    Vm.VerifyForm.MFAToken,
+                    Vm.VerifyForm.SecurityCode,
                     Vm.VerifyForm.RememberMe,
-                    rememberClient: false);
+                    rememberClient: false); // Indicate the browser is remembered and do not ask for two factor next time login
 
                 if (result.Succeeded)
                 {
@@ -131,8 +131,8 @@ namespace AspNetCoreIdentity.Pages.Account
         public class VerifyFormViewModel
         {
             [Required]
-            [Display(Name = "Security Token")]
-            public string MFAToken { get; set; } = "";
+            [Display(Name = "Security Code")]
+            public string SecurityCode { get; set; } = "";
 
             public bool RememberMe { get; set; }
         }
